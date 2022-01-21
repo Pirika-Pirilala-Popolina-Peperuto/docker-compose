@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  database-system:
+    depends_on:
+      - postgres
+    links:
+      - 'postgres:postgres'
+    image: "wayne900619/database-system:latest"
+    ports:
+      - "80:80"
+    environment:
+      - GRPC_PORT=50051
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=2fcmoj90@22
+      - POSTGRES_DBNAME=shop
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+  postgres:
+    image: "postgres:14.1"
+    volumes:
+       - ./:/var/lib/postgresql/data/pgdata
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=2fcmoj90@22
+      - POSTGRES_DB=shop
+      - PGDATA=/var/lib/postgresql/data/volume/pgdata 
+  magic-shop-web:
+    image: "wayne900619/magic-shop-web:latest"
+    ports:
+      - "8080:80"
+  content-management-system:
+    image: "wayne900619/content-management-system:latest"
+    ports:
+      - "8081:80"
+  finance_app:
+    image: "wayne900619/finance_app:latest"
+    ports:
+      - "3000:3000"
+  
